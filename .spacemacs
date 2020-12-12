@@ -45,7 +45,16 @@ This function should only modify configuration layer settings."
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
-     eww
+     (exwm :variables
+           exwm-enable-systray t
+           exwm-autostart-xdg-applications t
+           exwm-locking-command "i3lock -n"
+           exwm-install-logind-lock-handler t
+           exwm-terminal-command "st"
+           exwm-autostart-environment '("DESKTOP_SESSION=kde" "KDE_SESSION_VERSION=5")
+           exwm-custom-init (lambda()
+                              (exwm/autostart-process "Dunst OSD" "dunst")
+                              (exwm/autostart-process "KWallet Daemon" "kwalletd5")))
      (auto-completion :variables
                       auto-completion-enable-help-tooltip t)
      (clojure :variables
@@ -69,7 +78,19 @@ This function should only modify configuration layer settings."
      (version-control :variables
                       version-control-diff-tool 'diff-hl
                       version-control-global-margin t)
-     )
+     (auto-completion :variables auto-completion-enable-snippets-in-popup nil auto-completion-enable-help-tooltip t auto-completion-enable-sort-by-usage t)
+     lsp
+     dap ;; new debugger for python layer
+     (python :variables
+             python-backend 'lsp
+             ;; python-tab-width 4
+             python-fill-column 99
+             python-formatter 'yapf
+             python-format-on-save t
+             python-sort-imports-on-save t
+             python-pipenv-activate t)
+     syntax-checking
+     version-control)
 
 
    ;; List of additional packages that will be installed without being wrapped
@@ -227,11 +248,11 @@ It should only modify the values of Spacemacs settings."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press `SPC T n' to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(cyberpunk
+   dotspacemacs-themes '(doom-solarized-dark
+                         cyberpunk
                          doom-gruvbox-light
                          doom-gruvbox
                          doom-solarized-light
-                         doom-solarized-dark
                          spacemacs-dark
                          spacemacs-light)
 
@@ -344,7 +365,7 @@ It should only modify the values of Spacemacs settings."
 
    ;; If non-nil the frame is fullscreen when Emacs starts up. (default nil)
    ;; (Emacs 24.4+ only)
-   dotspacemacs-fullscreen-at-startup nil
+   dotspacemacs-fullscreen-at-startup t
 
    ;; If non-nil `spacemacs/toggle-fullscreen' will not use native fullscreen.
    ;; Use to disable fullscreen animations in OSX. (default nil)
@@ -534,6 +555,9 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
+  (spaceline-define-segment datetime
+    (shell-command-to-string "echo -n $(date '+%a %d %b %I:%M%p')"))
+  (spaceline-spacemacs-theme 'datetime)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
