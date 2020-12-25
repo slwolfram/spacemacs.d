@@ -51,6 +51,7 @@ This function should only modify configuration layer settings."
            exwm-locking-command "i3lock -n"
            exwm-install-logind-lock-handler t
            exwm-terminal-command "st"
+           exwm-manage-force-tiling t
            exwm-autostart-environment '("DESKTOP_SESSION=kde" "KDE_SESSION_VERSION=5")
            exwm-custom-init (lambda()
                               (exwm/autostart-process "Dunst OSD" "dunst")
@@ -555,9 +556,12 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
-  (spaceline-define-segment datetime
-    (shell-command-to-string "echo -n $(date '+%a %d %b %I:%M%p')"))
-  (spaceline-spacemacs-theme 'datetime)
+
+  ;; (spaceline-define-segment datetime
+  ;;   (shell-command-to-string "echo -n $(date '+%a %d %b %I:%M%p')"))
+  ;; (spaceline-spacemacs-theme 'datetime)
+  (exwm-systemtray-enable)
+  (exwm-init)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
