@@ -561,6 +561,11 @@ before packages are loaded."
   ;;   (shell-command-to-string "echo -n $(date '+%a %d %b %I:%M%p')"))
   ;; (spaceline-spacemacs-theme 'datetime)
   (exwm-systemtray-enable)
+  (exwm-input-set-key (kbd "s-z")
+                      (lambda () (interactive)
+                        (exwm/app-launcher "xfce4-appfinder")))
+  (setq exwm-randr-workspace-output-plist
+        '(0 "LVDS-1" 1 "HDMI-1"))
   (exwm-init)
   )
 
