@@ -1,21 +1,39 @@
-from collections import namedtuple, Mapping
+from typing import NamedTuple, Tuple, List
 from itertools import combinations, groupby
 import random
 
-game_attributes = ['id', 'name', 'state', 'big_blind', 'small_blind', 'players', 'num_seats', 'pot', 'deck']
-Game = namedtuple('Game', game_attributes)
+class Rank(NamedTuple):
+    name: str
+    value: str
 
-state_attributes = ['name', 'value']
-GameState = namedtuple('GameState', state_attributes)
+class Card(NamedTuple):
+    rank: Rank
+    suit: str
 
-player_attributes = ['id', 'name', 'hand', 'bet', 'position']
-Player = namedtuple('Player', player_attributes)
+class Player(NamedTuple):
+    id: str
+    name: str
+    hand: Tuple[Card]
+    bet: int
+    position: int
+    sitting_out: bool
+    seat_num: int
+    is_active: bool
 
-rank_attributes = ['name', 'value']
-Rank = namedtuple('Rank', rank_attributes)
+class GameState(NamedTuple):
+    name: str
+    value: int
 
-card_attributes = ['rank', 'suit']
-Card = namedtuple('Card', card_attributes)
+class Game(NamedTuple):
+    id: str
+    name: str
+    state: GameState
+    big_blind: int
+    small_blind: int
+    players: Tuple[Player]
+    num_seats: int
+    pot: int
+    deck: Tuple[Card]
 
 game_states =\
     [GameState(k, v) for v, k in enumerate
@@ -33,91 +51,88 @@ suits =\
 deck =\
     [Card(r, s) for r in ranks for s in suits]
 
-card_of =\
-    (lambda name, suit:
-     next(x for x in deck if x.rank.name == name and x.suit == suit))
+def card_of(name: str, suit: str) -> Card:
+    next(x for x in deck
+         if x.rank.name == name and x.suit == suit)
 
-hand_values =\
-    (lambda hand:
-     [card.rank.value for card in hand])
+def hand_values(hand: Tuple[Card]) -> Tuple[int]:
+    return [card.rank.value for card in hand]
 
-def n_of_a_kind(n, hand):
+def n_of_a_kind(n: int, hand: Tuple[Card]) -> int:
     hv = hand_values(hand)
     return any(hv.count(v) == n for v in hv)
 
-def high_card_value(hand_values):
+def high_card_value(hand_values: Tuple[int]) -> int:
     return max(hand_values)
 
-def low_card_value(hand_values):
+def low_card_value(hand_values: Tuple[int]) -> int:
     return min(hand_values)
 
-def one_pair(hand):
+def one_pair(hand: Tuple[Card]) -> bool:
     return n_of_a_kind(2, hand)
 
-def two_pair(hand):
+def two_pair(hand: Tuple[Card]) -> bool:
     return len([p for p in combinations(hand, 2) if one_pair(p)]) == 2
 
-def three_of_a_kind(hand):
+def three_of_a_kind(hand: Tuple[Card]) -> bool:
     return n_of_a_kind(3, hand)
 
-def straight(hand):
+def straight(hand: Tuple[Card]) -> bool:
     hand_vals = hand_values(hand).sort()
     val_range = list(range(low_card_value(hand_vals),
                            high_card_value(hand_vals) + 1))
     return val_range == hand_vals and len(val_range) == 5
 
-def flush(hand):
+def flush(hand: Tuple[Card]) -> bool:
     return all(c.suit == hand[0].suit for c in hand)
 
-def full_house(hand):
+def full_house(hand: Tuple[Card]) -> bool:
     return three_of_a_kind(hand) and one_pair(hand)
 
-def four_of_a_kind(hand):
+def four_of_a_kind(hand: Tuple[Card]) -> bool:
     return n_of_a_kind(4, hand)
 
-def straight_flush(hand):
+def straight_flush(hand: Tuple[Card]) -> bool:
     return straight(hand) and flush(hand)
 
-def royal_flush(hand):
+def royal_flush(hand: Tuple[Card]) -> bool:
     return straight_flush and high_card_value(hand) == ranks[-1].value
 
-def highest_value_score(hand):
+def highest_value_score(hand: Tuple[Card]) -> int:
     return high_card_value(hand_values(hand))
 
-def highest_paired_score(hand, base_score):
+def highest_paired_score(hand: Tuple[Card], base_score: int) -> int:
     g = dict(groupby(hand, lambda x: x.rank.value))
     return g
 
-def state_to_dict(state):
+def state_to_dict(state: GameState) -> dict:
     return state._asdict()
 
-def state_from_dict(state_dict):
-    assert isinstance(state_dict, Mapping)
+def state_from_dict(state_dict: dict) -> GameState:
     state_values = []
-    for k in state_attributes:
+    for k in GameState._fields:
         if k not in state_dict:
-            raise Exception(f"state is missing required attribute \"{k}\"")
+            raise Exception(f"state dict is missing required attribute \"{k}\"")
         else:
             state_values.append(state_dict[k])
     return GameState(*tuple(state_values))
 
 
-def rank_to_dict(rank):
+def rank_to_dict(rank: Rank) -> dict:
     return rank._asdict()
 
-def rank_from_dict(rank_dict):
-    assert isinstance(rank_dict, Mapping)
+def rank_from_dict(rank_dict: dict) -> Rank:
     rank_values = []
-    for k in rank_attributes:
+    for k in Rank._fields:
         if k not in rank_dict:
-            raise Exception(f"rank is missing required attribute \"{k}\"")
+            raise Exception(f"rank dict is missing required attribute \"{k}\"")
         else:
             rank_values.append(rank_dict[k])
     return Rank(*tuple(rank_values))
 
-def card_to_dict(card):
+def card_to_dict(card: Card) -> dict:
     card_dict = {}
-    for k in card_attributes:
+    for k in Card._fields:
         value = getattr(card, k)
         if k == 'rank':
             card_dict[k] = rank_to_dict(value)
@@ -125,21 +140,20 @@ def card_to_dict(card):
             card_dict[k] = value
     return card_dict
 
-def card_from_dict(card_dict):
-    assert isinstance(card_dict, Mapping)
+def card_from_dict(card_dict: dict) -> Card:
     card_values = []
-    for k in card_attributes:
+    for k in Card._fields:
         if k not in card_dict:
-            raise Exception(f"card is missing required attribute \"{k}\"")
+            raise Exception(f"card dict is missing required attribute \"{k}\"")
         if k == 'rank':
             card_values.append(rank_from_dict(card_dict[k]))
         else:
             card_values.append(card_dict[k])
     return Card(*tuple(card_values))
 
-def player_to_dict(player):
+def player_to_dict(player: Player) -> dict:
     player_dict = {}
-    for k in player_attributes:
+    for k in Player._fields:
         value = getattr(player, k)
         if k == 'hand':
             player_dict[k] = [card_to_dict(c) for c in value]
@@ -147,21 +161,21 @@ def player_to_dict(player):
             player_dict[k] = value
     return player_dict
 
-def player_from_dict(player_dict):
-    assert isinstance(player_dict, Mapping)
+def player_from_dict(player_dict: dict) -> Player:
     player_values = []
-    for k in player_attributes:
+    for k in Player._fields:
         if k not in player_dict:
-            raise Exception(f"player is missing required attribute \"{k}\"")
+            raise Exception(f"player dict is missing required attribute \"{k}\"")
         elif k == 'hand':
-            player_values.append([card_from_dict(c) for c in player_dict[k]])
+            hand = tuple(card_from_dict(c) for c in player_dict[k])
+            player_values.append(hand)
         else:
             player_values.append(player_dict[k])
     return Player(*tuple(player_values))
 
-def game_to_dict(game):
+def game_to_dict(game: Game) -> dict:
     game_dict = {}
-    for k in game_attributes:
+    for k in Game._fields:
         value = getattr(game, k)
         if k == 'players':
             game_dict[k] = [player_to_dict(p) for p in value]
@@ -173,23 +187,58 @@ def game_to_dict(game):
             game_dict[k] = value
     return game_dict
 
-def game_from_dict(game_dict):
-    assert isinstance(game_dict, Mapping)
+def game_from_dict(game_dict: dict) -> Game:
     game_values = []
-    for k in game_attributes:
+    for k in Game._fields:
         if k not in game_dict:
-            raise Exception(f"game is missing required attribute \"{k}\"")
+            raise Exception(f"game dict is missing required attribute \"{k}\"")
         elif k == 'players':
-            game_values.append([player_from_dict(p) for p in game_dict[k]])
+            players = tuple(player_from_dict(p) for p in game_dict[k])
+            game_values.append(players)
         elif k == 'deck':
-            game_values.append([card_from_dict(c) for c in game_dict[k]])
+            deck = tuple(card_from_dict(c) for c in game_dict[k])
+            game_values.append(deck)
         elif k == 'state':
             game_values.append(state_from_dict(game_dict[k]))
         else:
             game_values.append(game_dict[k])
     return Game(*tuple(game_values))
 
-def get_shuffled_deck():
+def get_shuffled_deck() -> List[Card]:
     deck_dict = [card_to_dict(c) for c in deck]
     random.shuffle(deck_dict)
     return deck_dict
+
+def init_game(game_dict: dict, new_id: str) -> Game:
+    game_dict.update({'id': new_id,
+                      'players': [],
+                      'deck': get_shuffled_deck(),
+                      'pot': 0,
+                      'state': state_to_dict(game_states[0])})
+    return game_from_dict(game_dict)
+
+def init_player(player_dict: dict) -> Player:
+    player_dict.update({'hand': None,
+                        'bet': None,
+                        'position': None,
+                        'sitting_out': True,
+                        'is_active': False})
+    return player_from_dict(player_dict)
+
+def seats_taken(game: Game) -> Tuple[int]:
+    return [p.seat_num for p in game.players]
+
+def is_seat_empty(seat_num: int, game: Game) -> bool:
+    return seat_num not in seats_taken(game)
+
+class Result(NamedTuple):
+    current_state: Game
+    previous_state: Game
+    log: str
+
+def join_game(player_dict: dict, game: Game) -> Result:
+    new_player = init_player(player_dict)
+    current_players = game.players
+    assert is_seat_empty(new_player.seat_num, game)
+    res_game = game._replace(players=(*current_players, new_player))
+    return Result(res_game, game, f"player {new_player.id} joined game {game.id}")

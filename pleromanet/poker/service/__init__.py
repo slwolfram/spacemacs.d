@@ -1,29 +1,33 @@
 from uuid import uuid4
+from typing import List
 import logging
 from pleromanet.poker import repository, model
 
-
-def create_game(game_dict):
+def create_game(game_dict: dict) -> str:
     id = str(uuid4())
-    game_dict.update({'id': id,
-                      'players': [],
-                      'deck': model.get_shuffled_deck(),
-                      'pot': 0,
-                      'state': model.state_to_dict(
-                          next(x for x in model.game_states
-                               if x.name == 'WAITING_TO_START'))})
-    logging.debug(model.game_from_dict(game_dict))
-    repository.create_game(game_dict)
+    game = model.init_game(game_dict, id)
+    repository.create_game(game)
     return id
 
-def get_games():
-    return repository.get_games()
+def get_games() -> List[dict]:
+    return repository._get_games()
 
-def get_one_game(game_id):
-    return repository.get_one_game(game_id)
+def get_one_game(game_id) -> List[dict]:
+    return repository._get_one_game(game_id)
 
-def update_game(game_id, game_dict):
+def update_game(game_id, game_dict) -> None:
     repository.update_game(game_id, game_dict)
 
-def delete_game(game_id):
+def delete_game(game_id) -> None:
     repository.delete_game(game_id)
+
+def add_player(game_id: str, player_dict: dict) -> str:
+    id = str(uuid4())
+    player_dict['id'] = id
+    player = model.init_player(player_dict)
+    repository.add_player(player)
+    return id
+
+def remove_player(game_id: str, player_id: str) -> None:
+    repository.remove_player(game_id, player_id)
+
