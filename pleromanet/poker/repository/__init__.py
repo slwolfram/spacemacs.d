@@ -6,7 +6,12 @@ from bson import ObjectId
 connection_string = 'mongodb://localhost:27017/'
 poker_db = 'poker'
 games_table = 'poker_games'
-db = pymongo.MongoClient(connection_string)[poker_db]
+
+def get_games_table():
+    client = pymongo.MongoClient(connection_string)
+    db = client[poker_db]
+    _games_table = db[games_table]
+    return _games_table
 
 def get_db() -> pymongo.MongoClient:
     return pymongo.MongoClient(connection_string)[poker_db]
@@ -14,39 +19,36 @@ def get_db() -> pymongo.MongoClient:
 def init_db():
     pass
 
-def create_game(game: str):
+def create_game(game: model.Game):
     game_dict = model.game_to_dict(game)
-    db[games_table].insert_one(game_dict)
+    get_games_table().insert_one(game_dict)
 
 def update_game(game_id: str, game_dict: dict):
     query = {'id': game_id}
     new_values = {'$set': game_dict}
-    db[games_table].update_one(query, new_values)
+    get_games_table().update_one(query, new_values)
 
 def _get_one_game(game_id: str) -> dict:
-    res = db[games_table].find_one({'id': game_id})
-    if res:
-        del res['_id']
+    res = get_games_table().find_one({'id': game_id})
+    if res: del res['_id']
     return res
 
 def get_one_game(game_id: str) -> model.Game:
     return model.game_from_dict(_get_one_game(game_id))
 
 def _get_games() -> List[dict]:
-    res = list(db[games_table].find({}))
-    for x in res:
-        del x['_id']
+    res = list(get_games_table().find({}))
+    for x in res: del x['_id']
     return res
 
 def get_games() -> Tuple[model.Game]:
-    games = _get_games()
-    return tuple(model.game_from_dict(g) for g in games)
+    return tuple(model.game_from_dict(g) for g in _get_games())
 
 def delete_game(game_id: str):
-    db[games_table].remove({'id': game_id})
+    get_games_table().remove({'id': game_id})
 
 def _get_players(game_id: str) -> [List[dict]]:
-    game = get_one_game(game_id)
+    game = _get_one_game(game_id)
     return game['players']
 
 def get_players(game_id: str) -> [Tuple[model.Player]]:
@@ -71,3 +73,4 @@ def remove_player(game_id: str, player_id: str) -> None:
     for p in game_dict['players']:
         if p['id'] == player_id:
             game_dict['players'].remove(p)
+    update_game(game_id, game_dict)

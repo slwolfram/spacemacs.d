@@ -13,12 +13,14 @@ class Card(NamedTuple):
 class Player(NamedTuple):
     id: str
     name: str
+    stack: int
     hand: Tuple[Card]
     bet: int
     position: int
     sitting_out: bool
+    has_folded: bool
     seat_num: int
-    is_active: bool
+    is_players_turn: bool
 
 class GameState(NamedTuple):
     name: str
@@ -37,7 +39,9 @@ class Game(NamedTuple):
 
 game_states =\
     [GameState(k, v) for v, k in enumerate
-     ('WAITING_TO_START PREFLOP FLOP TURN RIVER'.split())]
+     ('WAITING_TO_START PRE-FLOP FLOP TURN RIVER'.split())]
+
+
 
 ranks =\
     [Rank(k, v) for v, k in enumerate
@@ -156,7 +160,7 @@ def player_to_dict(player: Player) -> dict:
     for k in Player._fields:
         value = getattr(player, k)
         if k == 'hand':
-            player_dict[k] = [card_to_dict(c) for c in value]
+            player_dict[k] = ([card_to_dict(c) for c in value] if value else None)
         else:
             player_dict[k] = value
     return player_dict
@@ -167,7 +171,9 @@ def player_from_dict(player_dict: dict) -> Player:
         if k not in player_dict:
             raise Exception(f"player dict is missing required attribute \"{k}\"")
         elif k == 'hand':
-            hand = tuple(card_from_dict(c) for c in player_dict[k])
+            hand = (tuple(card_from_dict(c) for c in player_dict[k])
+                    if player_dict[k] else
+                    None)
             player_values.append(hand)
         else:
             player_values.append(player_dict[k])
@@ -209,12 +215,14 @@ def get_shuffled_deck() -> List[Card]:
     random.shuffle(deck_dict)
     return deck_dict
 
+initial_state = state_to_dict(game_states[0])
+
 def init_game(game_dict: dict, new_id: str) -> Game:
     game_dict.update({'id': new_id,
                       'players': [],
                       'deck': get_shuffled_deck(),
                       'pot': 0,
-                      'state': state_to_dict(game_states[0])})
+                      'state': initial_state})
     return game_from_dict(game_dict)
 
 def init_player(player_dict: dict) -> Player:
@@ -232,9 +240,16 @@ def is_seat_empty(seat_num: int, game: Game) -> bool:
     return seat_num not in seats_taken(game)
 
 class Result(NamedTuple):
-    current_state: Game
+    game: Game
     previous_state: Game
     log: str
+
+def is_end_of_round(game: Game) -> bool:
+    if all(p.)
+
+def has_started(game: Game) -> bool:
+    return game.state.name != 'WAITING_TO_START'
+
 
 def join_game(player_dict: dict, game: Game) -> Result:
     new_player = init_player(player_dict)
@@ -242,3 +257,20 @@ def join_game(player_dict: dict, game: Game) -> Result:
     assert is_seat_empty(new_player.seat_num, game)
     res_game = game._replace(players=(*current_players, new_player))
     return Result(res_game, game, f"player {new_player.id} joined game {game.id}")
+
+def StateTransition(func):
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        assert 'games' in kwargs
+        result = func(*args, **kwargs)
+        if has_started(result.game):
+            if is_end_of_round(result.game):
+                return next_round(result.game)
+            else:
+                return next_turn(result.game)
+        elif start_game_q(result.game):
+            return start_game(result.game)
+        else:
+            return result
+    return wrapper
+

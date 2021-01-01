@@ -8,6 +8,11 @@ game_parser.add_argument('big_blind', type=int, required=True, location='json')
 game_parser.add_argument('small_blind', type=int, required=True, location='json')
 game_parser.add_argument('num_seats', type=int, required=True, location='json')
 
+player_parser = api.parser()
+player_parser.add_argument('name', type=str, required=True, location='json')
+player_parser.add_argument('seat_num', type=str, required=True, location='json')
+player_parser.add_argument('stack', type=int, required=True, location='json')
+
 @api.route('/games/')
 class GameList(Resource):
     def get(self):
@@ -15,8 +20,7 @@ class GameList(Resource):
 
     @api.doc(parser=game_parser)
     def post(self):
-        game_dict = game_parser.parse_args()
-        return service.create_game(game_dict), 201
+        return service.create_game(game_parser.parse_args()), 201
 
 
 @api.route('/games/id=<string:game_id>')
@@ -29,26 +33,25 @@ class Game(Resource):
 
     @api.doc(parser=game_parser)
     def put(self, game_id):
-        game_dict = game_parser.parse_args()
-        return service.update_game(game_id, game_dict), 200
+        return service.update_game(game_id, game_parser.parse_args()), 200
 
 
 @api.route('/games/id=<string:game_id>/players/id=<string:player_id>')
 class Player(Resource):
     def get(self, game_id, player_id):
-        return 'a player', 200
+        return service.get_one_player(game_id, player_id), 200
 
     def delete(self, game_id, player_id):
-        return '', 204
+        return service.remove_player(game_id, player_id), 204
 
 
 @api.route('/games/id=<string:game_id>/players/')
 class PlayerList(Resource):
     def get(self, game_id):
-        return ['all', 'players'], 200
+        return service.get_players(game_id), 200
 
     def post(self, game_id):
-        return 'player_id', 201
+        return service.add_player(game_id, player_parser.parse_args()), 201
 
 @api.route('/games/id=<string:game_id>/players/id=<string:player_id>/action=<string:player_action>')
 class PlayerAction(Resource):

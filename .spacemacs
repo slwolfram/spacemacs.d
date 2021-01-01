@@ -556,12 +556,8 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
-
-  ;; (spaceline-define-segment datetime
-  ;;   (shell-command-to-string "echo -n $(date '+%a %d %b %I:%M%p')"))
-  ;; (spaceline-spacemacs-theme 'datetime)
   (exwm-systemtray-enable)
-  (exwm-input-set-key (kbd "s-z")
+  (exwm-input-set-key (kbd "M-ESC")
                       (lambda () (interactive)
                         (exwm/app-launcher "xfce4-appfinder")))
   (setq exwm-randr-workspace-output-plist
