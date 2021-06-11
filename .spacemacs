@@ -69,7 +69,7 @@ This function should only modify configuration layer settings."
    ;; `dotspacemacs/user-config'. To use a local version of a package, use the
    ;; `:location' property: '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
-   dotspacemacs-additional-packages '(vterm)
+   dotspacemacs-additional-packages '(vterm counsel)
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -528,6 +528,8 @@ configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
   (exwm-init)
+  (package-refresh-contents)
+  ;(use-package counsel)
   (use-package all-the-icons)
   (use-package spaceline-all-the-icons
     :after spaceline
@@ -538,6 +540,7 @@ before packages are loaded."
   (exwm-input-set-key (kbd "M-b") 'kill-this-buffer)
   (exwm-input-set-key (kbd "M-w") 'quit-window)
   (exwm-input-set-key (kbd "M-q") 'kill-this-buffer)
+  (exwm-input-set-key (kbd "s-r") 'counsel-linux-app)
   (shell-command "xsetroot -cursor_name left_ptr")
   )
 
