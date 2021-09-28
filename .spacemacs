@@ -34,6 +34,9 @@ This function should only modify configuration layer settings."
    dotspacemacs-configuration-layers
    '(javascript
      (python :variables python-backend 'lsp python-lsp-server 'pyright)
+     (org :variables
+          org-enable-roam-support t
+          )
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
@@ -43,7 +46,6 @@ This function should only modify configuration layer settings."
      ;; better-defaults
      emacs-lisp
      ;; git
-     mu4e
      helm
      lsp
      ;; markdown
@@ -69,7 +71,7 @@ This function should only modify configuration layer settings."
    ;; `dotspacemacs/user-config'. To use a local version of a package, use the
    ;; `:location' property: '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
-   dotspacemacs-additional-packages '(vterm counsel)
+   dotspacemacs-additional-packages '(vterm counsel helm-z)
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -528,20 +530,49 @@ configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
   (exwm-init)
-  (package-refresh-contents)
+  ;(package-refresh-contents)
   ;(use-package counsel)
   (use-package all-the-icons)
   (use-package spaceline-all-the-icons
     :after spaceline
     :config (spaceline-all-the-icons-theme))
-  (exwm-input-set-key (kbd "M-`")
-                      (lambda () (interactive)
-                        (exwm/app-launcher "xfce4-appfinder")))
   (exwm-input-set-key (kbd "M-b") 'kill-this-buffer)
   (exwm-input-set-key (kbd "M-w") 'quit-window)
   (exwm-input-set-key (kbd "M-q") 'kill-this-buffer)
   (exwm-input-set-key (kbd "s-r") 'counsel-linux-app)
+  (global-set-key (kbd "C-M-_") 'shrink-window)
+  (global-set-key (kbd "C-M-+") 'enlarge-window)
   (shell-command "xsetroot -cursor_name left_ptr")
+  ;(setq-default mode-line-format nil)
+  ;(setq mode-line-format (spaceline-ml-all-the-icons))
+  ;(setq-default mode-line-format nil)
+  (setq org-roam-dailies-directory "journal/")
+  (add-hook 'exwm-mode-hook (lambda () (spacemacs/toggle-mode-line-off)))
+  (add-hook 'emacs-lisp-mode-hook (lambda () (spacemacs/toggle-line-numbers-on)))
+  (add-hook 'python-mode-hook (lambda ()
+                                (spacemacs/toggle-line-numbers-on)
+                                (setq python-indent-offset 4)))
+  ;(add-hook 'vterm-mode-hook (lambda () (spacemacs/toggle-mode-line-off)))
+                                        ;(treemacs)
+
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+    '((python . t)
+      (sqlite . t)))
+
+  (defun my-org-confirm-babel-evaluate (lang body)
+    (not (member lang '("sqlite" "python"))))
+
+  (setq org-confirm-babel-evaluate 'my-org-confirm-babel-evaluate)
+  (add-to-list 'org-structure-template-alist '("python" . "src python
+"))
+  ;; src block indentation / editing / syntax highlighting
+  (setq org-src-fontify-natively t
+        org-src-window-setup 'current-window ;; edit in current window
+        org-src-strip-leading-and-trailing-blank-lines t
+        org-src-preserve-indentation t ;; do not put two spaces on the left
+        org-src-tab-acts-natively t)
+  (require 'ob-session-async-python)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -558,7 +589,7 @@ This function is called at the very end of Spacemacs initialization."
  ;; If there is more than one, they won't work right.
  '(evil-want-Y-yank-to-eol nil)
  '(package-selected-packages
-   '(web-beautify tern prettier-js npm-mode nodejs-repl livid-mode skewer-mode js2-refactor multiple-cursors js2-mode js-doc import-js grizzl impatient-mode htmlize simple-httpd add-node-modules-path yapfify stickyfunc-enhance sphinx-doc pytest pyenv-mode py-isort poetry transient pippel pipenv pyvenv pip-requirements lsp-python-ms lsp-pyright live-py-mode importmagic epc ctable concurrent deferred helm-pydoc helm-gtags helm-cscope xcscope ggtags dap-mode bui cython-mode counsel-gtags counsel swiper ivy company-anaconda blacken anaconda-mode pythonic yasnippet-snippets ws-butler writeroom-mode winum which-key vterm volatile-highlights vi-tilde-fringe uuidgen use-package undo-tree treemacs-projectile treemacs-persp treemacs-icons-dired treemacs-evil toc-org symon symbol-overlay string-inflection spaceline-all-the-icons restart-emacs request rainbow-delimiters popwin pcre2el password-generator paradox overseer org-superstar open-junk-file nameless mu4e-maildirs-extension mu4e-alert move-text macrostep lsp-ui lsp-treemacs lsp-origami lorem-ipsum link-hint indent-guide hybrid-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-purpose helm-projectile helm-org helm-mu helm-mode-manager helm-make helm-lsp helm-ls-git helm-flx helm-descbinds helm-company helm-cider helm-c-yasnippet helm-ag google-translate golden-ratio fuzzy framemove font-lock+ flycheck-pos-tip flycheck-package flycheck-elsa flx-ido fancy-battery eyebrowse exwm expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-easymotion evil-collection evil-cleverparens evil-args evil-anzu emr elisp-slime-nav editorconfig dumb-jump dotenv-mode doom-themes dired-quick-sort diminish devdocs desktop-environment define-word column-enforce-mode clojure-snippets clean-aindent-mode cider-eval-sexp-fu centered-cursor-mode auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent ace-link ace-jump-helm-line ac-ispell)))
+   '(ob-ipython helm-z web-beautify tern prettier-js npm-mode nodejs-repl livid-mode skewer-mode js2-refactor multiple-cursors js2-mode js-doc import-js grizzl impatient-mode htmlize simple-httpd add-node-modules-path yapfify stickyfunc-enhance sphinx-doc pytest pyenv-mode py-isort poetry transient pippel pipenv pyvenv pip-requirements lsp-python-ms lsp-pyright live-py-mode importmagic epc ctable concurrent deferred helm-pydoc helm-gtags helm-cscope xcscope ggtags dap-mode bui cython-mode counsel-gtags counsel swiper ivy company-anaconda blacken anaconda-mode pythonic yasnippet-snippets ws-butler writeroom-mode winum which-key vterm volatile-highlights vi-tilde-fringe uuidgen use-package undo-tree treemacs-projectile treemacs-persp treemacs-icons-dired treemacs-evil toc-org symon symbol-overlay string-inflection spaceline-all-the-icons restart-emacs request rainbow-delimiters popwin pcre2el password-generator paradox overseer org-superstar open-junk-file nameless mu4e-maildirs-extension mu4e-alert move-text macrostep lsp-ui lsp-treemacs lsp-origami lorem-ipsum link-hint indent-guide hybrid-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-purpose helm-projectile helm-org helm-mu helm-mode-manager helm-make helm-lsp helm-ls-git helm-flx helm-descbinds helm-company helm-cider helm-c-yasnippet helm-ag google-translate golden-ratio fuzzy framemove font-lock+ flycheck-pos-tip flycheck-package flycheck-elsa flx-ido fancy-battery eyebrowse exwm expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-easymotion evil-collection evil-cleverparens evil-args evil-anzu emr elisp-slime-nav editorconfig dumb-jump dotenv-mode doom-themes dired-quick-sort diminish devdocs desktop-environment define-word column-enforce-mode clojure-snippets clean-aindent-mode cider-eval-sexp-fu centered-cursor-mode auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent ace-link ace-jump-helm-line ac-ispell)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
