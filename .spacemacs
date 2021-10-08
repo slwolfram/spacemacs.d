@@ -34,9 +34,9 @@ This function should only modify configuration layer settings."
    dotspacemacs-configuration-layers
    '(javascript
      (python :variables python-backend 'lsp python-lsp-server 'pyright)
-     (org :variables
-          org-enable-roam-support t
-          )
+     (org :packages (not org-roam))
+     (plantuml :variables plantuml-jar-path "~/spacemacs.d/plantUml.jar" org-plantuml-jar-path "~/spacemacs.d/plantUml.jar")
+
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
@@ -222,8 +222,13 @@ It should only modify the values of Spacemacs settings."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press `SPC T n' to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(doom-solarized-dark
+   dotspacemacs-themes '(
+                         tron-legacy
+                         doom-dracula
+                         cyberpunk
+                         gotham
                          spacemacs-dark
+                         doom-solarized-dark
                          spacemacs-light)
 
    ;; Set the theme for the Spaceline. Supported themes are `spacemacs',
@@ -242,8 +247,8 @@ It should only modify the values of Spacemacs settings."
    ;; Default font or prioritized list of fonts. The `:size' can be specified as
    ;; a non-negative integer (pixel size), or a floating-point (point size).
    ;; Point size is recommended, because it's device independent. (default 10.0)
-   dotspacemacs-default-font '("Source Code Pro"
-                               :size 10.0
+   dotspacemacs-default-font '("Fira Code"
+                               :size 9.0
                                :weight normal
                                :width normal)
 
@@ -531,22 +536,20 @@ Put your configuration code here, except for variables that should be set
 before packages are loaded."
   (exwm-init)
   ;(package-refresh-contents)
-  ;(use-package counsel)
+                                        ;(use-package counsel)
   (use-package all-the-icons)
-  (use-package spaceline-all-the-icons
-    :after spaceline
-    :config (spaceline-all-the-icons-theme))
+  (use-package spaceline-all-the-icons)
+  ;  :after spaceline
+  ;  :config (spaceline-all-the-icons-theme))
   (exwm-input-set-key (kbd "M-b") 'kill-this-buffer)
   (exwm-input-set-key (kbd "M-w") 'quit-window)
   (exwm-input-set-key (kbd "M-q") 'kill-this-buffer)
   (exwm-input-set-key (kbd "s-r") 'counsel-linux-app)
   (global-set-key (kbd "C-M-_") 'shrink-window)
   (global-set-key (kbd "C-M-+") 'enlarge-window)
-  (shell-command "xsetroot -cursor_name left_ptr")
   ;(setq-default mode-line-format nil)
   ;(setq mode-line-format (spaceline-ml-all-the-icons))
-  ;(setq-default mode-line-format nil)
-  (setq org-roam-dailies-directory "journal/")
+  ;(setq-default mode-line-form wat nil)
   (add-hook 'exwm-mode-hook (lambda () (spacemacs/toggle-mode-line-off)))
   (add-hook 'emacs-lisp-mode-hook (lambda () (spacemacs/toggle-line-numbers-on)))
   (add-hook 'python-mode-hook (lambda ()
@@ -554,7 +557,6 @@ before packages are loaded."
                                 (setq python-indent-offset 4)))
   ;(add-hook 'vterm-mode-hook (lambda () (spacemacs/toggle-mode-line-off)))
                                         ;(treemacs)
-
   (org-babel-do-load-languages
    'org-babel-load-languages
     '((python . t)
@@ -570,9 +572,12 @@ before packages are loaded."
   (setq org-src-fontify-natively t
         org-src-window-setup 'current-window ;; edit in current window
         org-src-strip-leading-and-trailing-blank-lines t
-        org-src-preserve-indentation t ;; do not put two spaces on the left
+        org-src-preserve-indentation nil ;; do not put two spaces on the left
+        org-edit-src-content-indentation 0
         org-src-tab-acts-natively t)
+  (add-to-list 'load-path "/home/p1e191223/.emacs.d/private/local/ob-session-async/lisp/")
   (require 'ob-session-async-python)
+
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -589,7 +594,7 @@ This function is called at the very end of Spacemacs initialization."
  ;; If there is more than one, they won't work right.
  '(evil-want-Y-yank-to-eol nil)
  '(package-selected-packages
-   '(ob-ipython helm-z web-beautify tern prettier-js npm-mode nodejs-repl livid-mode skewer-mode js2-refactor multiple-cursors js2-mode js-doc import-js grizzl impatient-mode htmlize simple-httpd add-node-modules-path yapfify stickyfunc-enhance sphinx-doc pytest pyenv-mode py-isort poetry transient pippel pipenv pyvenv pip-requirements lsp-python-ms lsp-pyright live-py-mode importmagic epc ctable concurrent deferred helm-pydoc helm-gtags helm-cscope xcscope ggtags dap-mode bui cython-mode counsel-gtags counsel swiper ivy company-anaconda blacken anaconda-mode pythonic yasnippet-snippets ws-butler writeroom-mode winum which-key vterm volatile-highlights vi-tilde-fringe uuidgen use-package undo-tree treemacs-projectile treemacs-persp treemacs-icons-dired treemacs-evil toc-org symon symbol-overlay string-inflection spaceline-all-the-icons restart-emacs request rainbow-delimiters popwin pcre2el password-generator paradox overseer org-superstar open-junk-file nameless mu4e-maildirs-extension mu4e-alert move-text macrostep lsp-ui lsp-treemacs lsp-origami lorem-ipsum link-hint indent-guide hybrid-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-purpose helm-projectile helm-org helm-mu helm-mode-manager helm-make helm-lsp helm-ls-git helm-flx helm-descbinds helm-company helm-cider helm-c-yasnippet helm-ag google-translate golden-ratio fuzzy framemove font-lock+ flycheck-pos-tip flycheck-package flycheck-elsa flx-ido fancy-battery eyebrowse exwm expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-easymotion evil-collection evil-cleverparens evil-args evil-anzu emr elisp-slime-nav editorconfig dumb-jump dotenv-mode doom-themes dired-quick-sort diminish devdocs desktop-environment define-word column-enforce-mode clojure-snippets clean-aindent-mode cider-eval-sexp-fu centered-cursor-mode auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent ace-link ace-jump-helm-line ac-ispell)))
+   '(color-theme-modern ob-ipython helm-z web-beautify tern prettier-js npm-mode nodejs-repl livid-mode skewer-mode js2-refactor multiple-cursors js2-mode js-doc import-js grizzl impatient-mode htmlize simple-httpd add-node-modules-path yapfify stickyfunc-enhance sphinx-doc pytest pyenv-mode py-isort poetry transient pippel pipenv pyvenv pip-requirements lsp-python-ms lsp-pyright live-py-mode importmagic epc ctable concurrent deferred helm-pydoc helm-gtags helm-cscope xcscope ggtags dap-mode bui cython-mode counsel-gtags counsel swiper ivy company-anaconda blacken anaconda-mode pythonic yasnippet-snippets ws-butler writeroom-mode winum which-key vterm volatile-highlights vi-tilde-fringe uuidgen use-package undo-tree treemacs-projectile treemacs-persp treemacs-icons-dired treemacs-evil toc-org symon symbol-overlay string-inflection spaceline-all-the-icons restart-emacs request rainbow-delimiters popwin pcre2el password-generator paradox overseer org-superstar open-junk-file nameless mu4e-maildirs-extension mu4e-alert move-text macrostep lsp-ui lsp-treemacs lsp-origami lorem-ipsum link-hint indent-guide hybrid-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-purpose helm-projectile helm-org helm-mu helm-mode-manager helm-make helm-lsp helm-ls-git helm-flx helm-descbinds helm-company helm-cider helm-c-yasnippet helm-ag google-translate golden-ratio fuzzy framemove font-lock+ flycheck-pos-tip flycheck-package flycheck-elsa flx-ido fancy-battery eyebrowse exwm expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-easymotion evil-collection evil-cleverparens evil-args evil-anzu emr elisp-slime-nav editorconfig dumb-jump dotenv-mode doom-themes dired-quick-sort diminish devdocs desktop-environment define-word column-enforce-mode clojure-snippets clean-aindent-mode cider-eval-sexp-fu centered-cursor-mode auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent ace-link ace-jump-helm-line ac-ispell)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -597,3 +602,16 @@ This function is called at the very end of Spacemacs initialization."
  ;; If there is more than one, they won't work right.
  )
 )
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(framemove exwm xelb desktop-environment yapfify ws-butler winum which-key web-beautify vterm volatile-highlights vi-tilde-fringe uuidgen use-package undo-tree toc-org spaceline powerline restart-emacs request rainbow-delimiters pyvenv pytest pyenv-mode py-isort popwin pip-requirements persp-mode pcre2el paradox org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-plus-contrib org-mime org-download org-bullets open-junk-file neotree move-text macrostep lorem-ipsum livid-mode skewer-mode simple-httpd live-py-mode linum-relative link-hint json-mode json-snatcher json-reformat js2-refactor js2-mode js-doc indent-guide hy-mode dash-functional hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-z helm-themes helm-swoop helm-pydoc helm-projectile projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio gnuplot flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg elisp-slime-nav dumb-jump diminish define-word cython-mode counsel swiper ivy column-enforce-mode coffee-mode clj-refactor hydra inflections multiple-cursors paredit yasnippet lv clean-aindent-mode cider-eval-sexp-fu eval-sexp-fu cider sesman seq spinner queue pkg-info parseedn clojure-mode parseclj epl bind-map bind-key auto-highlight-symbol ht auto-compile packed anaconda-mode pythonic f dash s aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async doom-solarized-dark-theme)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
