@@ -1,0 +1,21 @@
+;; shadow-cljs configuration
+{:source-paths
+ ["src/dev"
+  "src/main"
+  "src/test"]
+
+ :dependencies
+ [[reagent "0.9.1"]
+  [re-frame "1.1.2"]
+  [cljs-ajax "0.8.1"]
+  [tupelo "21.01.26b"]
+  [nilenso/wscljs "0.2.0"]]
+
+ :dev-http {5000 "public/"}
+
+ :builds
+ {:app {:output-dir "public/compiledjs/"
+        :asset-path "compiledjs"
+        :target :browser
+        :modules {:main {:init-fn app.core/init!}}
+        :devtools {:after-load app.core/reload!}}}}

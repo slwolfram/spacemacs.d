@@ -1,0 +1,1 @@
+{"version":3,"sources":["app/db.cljs"],"mappings":";AAEA,oBAAA,2CAAA,qDAAA,pHAAKA","names":["app.db/default-db"],"sourcesContent":["(ns app.db)\n\n(def default-db {:name \"default-db\"})\n"]}

@@ -1,0 +1,68 @@
+#+title: endeavor.com - The Waiting Room
+#+author: Anonymous
+#+date:
+
+* The Kingdom
+  The user starts his journey in the Foundation's "the waiting room", and is
+  presented with series of options.
+  
+  1. Transfer to The Office of Skills
+  2. Transfer to The Office of Achievements
+  3. Submit a business inquiry
+  4. Sign the waiting list
+  5. Sign in
+  6. Exit
+
+  It is advised first to sign the waiting list to register a persistent user
+  identity and allow one to access the Skills and Achievements tests, through
+  which one may be admitted into the Foundation. Choosing to Exit will put one
+  in the Town Square, the heart of The Kingdom.
+
+  The Town Square is a public group chat (or a sort of social media platform).
+  Essential to the Town Square is the ability to create and subscribe to Orgs.
+  Orgs are communities which form around the discussion of topics relevant to
+  the game of Endeavor. To create an org, one must have obtained a certain rank
+  in Skills/Achievements. Orgs are neutral and community driven. Orgs are
+  moderated by the Office of Skills and the Office of Achievements and
+  administered by the Foundation.
+
+* The Foundation
+  The Foundation is an adventurer's guild. Membership in the Foundation allows
+  one to create Job Postings on the Town Square's Jobs Board. Players can then
+  earn Skills and Achievements by completing jobs. (Skills and achievements can
+  also be rewarded for participating in sponsored Org topics.) While aiming to
+  be open to everyone, to discourage spamming and encourage investment in the
+  Endeavor ecosystem, The Foundation requires that all members meet a certain
+  admittance threshold.
+
+  1. A score of at least _ on the Skills Test.
+  2. A score of at least _ on the Achievements Test.
+  3. At least _ achievement points.
+  4. At least _ skill points.
+
+  The grading thresholds for points 1. and 2. are determined by the respective
+  offices, while the thresholds for 3. and 4. are determined by the Foundation.
+
+  Job Postings are moderated by the Foundation Board and administered by the
+  Foundation President. Jobs are to be assigned skill and achievement values
+  by the respective offices. To this end, it is expected for Job Postings to align with Assembly
+  Directives decided during the quarterly Assembly Meetings.
+  
+  The Foundation Board consists of five leaders, democratically elected by
+  members of the Foundation. These members then elect the Foundation President,
+  who oversees the administrative aspects of the Foundation. Note that the
+  President may be replaced at any point, or the office abolished, by a majority
+  vote of the Board. An often overlooked significance of the Foundation Board is
+  that, while a politically neutral entity, they may attend and influence the
+  quarterly General Assembly decision meetings, though they are only able collectively
+  to cast one vote per Decision Narrative.
+
+  It should be noted that, the existence of the Foundation is to some extent a
+  function of the tolerance of the higher Offices. The Foundation exists to
+  facilitate friendly relations between the people of The Kingdom and The Crown.
+  Technically, they lack any legal sovereignty. The higher Offices (viz. Skills,
+  Achievements, Urban Planning) may at any time convene a vote to revoke or
+  replace any member of the Foundation Board.
+
+  
+  

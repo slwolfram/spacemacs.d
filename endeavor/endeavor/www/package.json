@@ -1,0 +1,19 @@
+{
+    "name": "pleromanet",
+    "version": "1.0.0",
+    "main": "index.js",
+    "scripts": {
+        "start": "shadow-cljs watch app"
+    },
+    "devDependencies": {
+        "shadow-cljs": "^2.11.18"
+    },
+    "dependencies": {
+        "create-react-class": "15.6.3",
+        "g": "^2.0.1",
+        "react": "16.9.0",
+        "react-dom": "16.9.0",
+        "react-router": "5.0.0",
+        "react-router-dom": "5.0.0"
+    }
+}
