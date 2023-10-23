@@ -1,0 +1,996 @@
+{
+	"info": {
+		"_postman_id": "b28d3691-a340-4911-8e85-75b1d1c1a54c",
+		"name": "API Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "10503624"
+	},
+	"item": [
+		{
+			"name": "Accumulator",
+			"item": [
+				{
+					"name": "custom-load-compare",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Success response\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"LastName\": \"LNAME\",\r\n    \"FirstName\": \"FNAME\",\r\n    \"BirthDate\": \"12-30-1991\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://svck-qa.wellfirstbenefits.com/claims/accumulator-rx/accum-ods-custom-load-compare/custom_load_compare"
+					},
+					"response": []
+				},
+				{
+					"name": "custom-load-compare/results",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Success response\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"LastName\": \"LNAME\",\r\n    \"FirstName\": \"FNAME\",\r\n    \"BirthDate\": \"12-30-1991\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://svck-qa.wellfirstbenefits.com/claims/accumulator-rx/accum-ods-custom-load-compare/custom_load_compare/results"
+					},
+					"response": []
+				},
+				{
+					"name": "inbound-automation",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Success response\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"LastName\": \"LNAME\",\r\n    \"FirstName\": \"FNAME\",\r\n    \"BirthDate\": \"12-30-1991\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://svck-qa.wellfirstbenefits.com/claims/accumulator-rx/accum-inbound-compare/inbound_automation"
+					},
+					"response": []
+				},
+				{
+					"name": "recon-service/byreason/summary",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Success response\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"LastName\": \"LNAME\",\r\n    \"FirstName\": \"FNAME\",\r\n    \"BirthDate\": \"12-30-1991\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://svck-qa.wellfirstbenefits.com/claims/accumulator-rx/recon-service/byreason/summary/20220506"
+					},
+					"response": []
+				},
+				{
+					"name": "rx-recon-reprocess/mtv-loadcheck",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Success response\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"CorrelationID\": \"string\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://svck-qa.wellfirstbenefits.com/claims/accumulator-rx/rx-recon-reprocess/mtv-loadcheck"
+					},
+					"response": []
+				},
+				{
+					"name": "pha-xwalk-service",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Success response\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://svck-dev.dhp.ad.deanhealth.com/claims/pha-crosswalk/pha-crosswalk-service/pharmadoc/PHA_XWALK.json"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Subrogation",
+			"item": [
+				{
+					"name": "subrogation-service",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Success response\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"LastName\": \"LNAME\",\r\n    \"FirstName\": \"FNAME\",\r\n    \"BirthDate\": \"12-30-1991\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://svck.dev.deanhealth.com/dev/appportal/subrogation/subrogation-service/injuryreport/postinjuryreportserviceasync"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Codesets",
+			"item": [
+				{
+					"name": "codeset-retrieve-service/health",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Success response\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"CorrelationID\": \"string\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://svck-qa.wellfirstbenefits.com/claims/codeset/kb-codeset-retrieve-service/health"
+					},
+					"response": []
+				},
+				{
+					"name": "codeset-retrieve-service/forceRun",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Success response\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"CorrelationID\": \"string\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://svck-qa.wellfirstbenefits.com/claims/codeset/kb-codeset-retrieve-service/forceRun"
+					},
+					"response": []
+				},
+				{
+					"name": "codeset-load-service/health",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Success response\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"CorrelationID\": \"string\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://svck-qa.wellfirstbenefits.com/claims/codeset/kb-codeset-load-service/health"
+					},
+					"response": []
+				},
+				{
+					"name": "codeset-load-service/forceRun",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Success response\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"CorrelationID\": \"string\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://svck-qa.wellfirstbenefits.com/claims/codeset/kb-codeset-load-service/forceRun"
+					},
+					"response": []
+				},
+				{
+					"name": "codeset-repoload-config-service/health",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Success response\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"CorrelationID\": \"string\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://svck-dev.dhp.ad.deanhealth.com/claims/codeset/kb-codeset-repoload-config-service/health"
+					},
+					"response": []
+				},
+				{
+					"name": "codeset-repoload-config-service/forceRun",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Success response\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"CorrelationID\": \"string\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://svck-dev.dhp.ad.deanhealth.com/claims/codeset/kb-codeset-repoload-config-service/forceRun"
+					},
+					"response": []
+				},
+				{
+					"name": "codeset-repoload-service/health",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Success response\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"CorrelationID\": \"string\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://svck-qa.wellfirstbenefits.com/claims/codeset/kb-codeset-repoload-service/health"
+					},
+					"response": []
+				},
+				{
+					"name": "codeset-repoload-service/forceRun",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Success response\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"CorrelationID\": \"string\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://svck-qa.wellfirstbenefits.com/claims/codeset/kb-codeset-repoload-service/forceRun"
+					},
+					"response": []
+				},
+				{
+					"name": "codeset-chg-rpt-services/changefiles",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Success response\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://svck-qa.wellfirstbenefits.com/claims/codeset/kb-codeset-chg-rpt-services/ChangeReport/changefiles/HCPCS"
+					},
+					"response": []
+				},
+				{
+					"name": "sds-codeset-extract",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Success response\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://svck-qa.wellfirstbenefits.com/claims/sds-codeset/sds-codeset-extract/api/sds-extract/extract-and-archive"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Enrollment",
+			"item": [
+				{
+					"name": "medicare-info-service",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Success response\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://svck-qa.wellfirstbenefits.com/member/enrollment/medicare-info-service/createalert?ContractID=117627895&MemberID=03&EffectiveDate=20200101&AlertCode=DB01",
+							"protocol": "https",
+							"host": [
+								"svck-qa",
+								"wellfirstbenefits",
+								"com"
+							],
+							"path": [
+								"member",
+								"enrollment",
+								"medicare-info-service",
+								"createalert"
+							],
+							"query": [
+								{
+									"key": "ContractID",
+									"value": "117627895"
+								},
+								{
+									"key": "MemberID",
+									"value": "03"
+								},
+								{
+									"key": "EffectiveDate",
+									"value": "20200101"
+								},
+								{
+									"key": "AlertCode",
+									"value": "DB01"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Provider",
+			"item": [
+				{
+					"name": "kb-provider-download-service/perform-qualifier-replace",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Success response\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/swolfc/qual_replace_dvlx_subset.xlsx"
+								}
+							]
+						},
+						"url": "https://svck-dev.wellfirstbenefits.com/provider/contracts/kb-provider-download-service/perform-qualifier-replace"
+					},
+					"response": []
+				},
+				{
+					"name": "provider-contract/contract/master/id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Success response\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/swolfc/qual_replace_dvlx_subset.xlsx"
+								}
+							]
+						},
+						"url": "https://svck-qa.wellfirstbenefits.com/provider/contracts/kb-provider-contract/contract/master/id/493717144282"
+					},
+					"response": []
+				},
+				{
+					"name": "mtv-provider-contract/term-contract",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Success response\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"newEffectiveDate\": \"2023-01-20\",\r\n    \"oldContractIdentifier\": \"139208264567\",\r\n    \"isMaster\": \"false\",\r\n    \"providerIdentifier\": \"100486200708\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://svck-dev.wellfirstbenefits.com/provider/contracts/kb-mtv-provider-contract/term-contract"
+					},
+					"response": []
+				},
+				{
+					"name": "MTV API - list contracts",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Success response\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"importStartIpcn1ProviderContract\" : {\r\n    \"tidentifier\" : \"11708365341 \",\r\n    \"trustClients\" : false\r\n  },\r\n  \"dialect\" : \"\",\r\n  \"exitState\" : 0,\r\n  \"clientId\" : \"\",\r\n  \"clientPassword\" : \"\",\r\n  \"trustClients\" : false,\r\n  \"command\" : \"\",\r\n  \"nextLocation\" : \"\",\r\n  \"importQualifyIpcn1ProviderContract\" : {\r\n    \"type\" : \"M\",\r\n    \"voidFlag\" : \" \",\r\n    \"teffectiveDate\" : \"        \",\r\n    \"typeIdentifier\" : \"\",\r\n    \"trustClients\" : false\r\n  },\r\n  \"importIpcn1Interface\" : {\r\n    \"returnAddress\" : \"                                                                \",\r\n    \"securityId\" : \"                \",\r\n    \"requestorId\" : \"                \",\r\n    \"trustClients\" : false,\r\n    \"securityPassword\" : \"                                \",\r\n    \"requestorPassword\" : \"                                \"\r\n  },\r\n  \"importListControlsIefSupplied\" : {\r\n    \"trustClients\" : false,\r\n    \"command\" : \"                                                                                \"\r\n  },\r\n  \"importIprv1TransmissionControl\" : {\r\n    \"tidentifier\" : \"            \",\r\n    \"trustClients\" : false,\r\n    \"transmissionMode\" : \"  \"\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "https://svck-dev.wellfirstbenefits.com/provider/contracts/kb-ms-mtv-wrapper/common?jaxb=false&apiname=Ppcn1cm2ListProvContractT",
+							"protocol": "https",
+							"host": [
+								"svck-dev",
+								"wellfirstbenefits",
+								"com"
+							],
+							"path": [
+								"provider",
+								"contracts",
+								"kb-ms-mtv-wrapper",
+								"common"
+							],
+							"query": [
+								{
+									"key": "jaxb",
+									"value": "false"
+								},
+								{
+									"key": "apiname",
+									"value": "Ppcn1cm2ListProvContractT"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "kb-ms-csv-to-xlsx",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Success response\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "header1,header2,header3\r\ndata1,data2,data3"
+						},
+						"url": "https://svck-qa.wellfirstbenefits.com/provider/contracts/kb-ms-csv-to-xlsx/delimiter/,"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "UI Path",
+			"item": [
+				{
+					"name": "mtv-benefit/getsharepointdoc",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Success response\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": "https://svck-qa.wellfirstbenefits.com/member/mtv-benefit/getsharepointdoc/getListOfDocId/benefitTemplate"
+					},
+					"response": []
+				},
+				{
+					"name": "mtv-benefit/benefit-eih-db-svc",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Success response\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": "https://svck-qa.wellfirstbenefits.com/member/mtv-benefit/benefit-eih-db-svc/getParsedData"
+					},
+					"response": []
+				},
+				{
+					"name": "mtv-benefit/benefit-keyword-db-svc",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Success response\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "<note>\r\n<to>Tove</to>\r\n<from>Jani</from>\r\n<heading>Reminder</heading>\r\n<body>Don't forget me this weekend!</body>\r\n</note>"
+						},
+						"url": "https://svck-qa.wellfirstbenefits.com/member/mtv-benefit/benefit-keyword-db-svc/fileInfo/foo"
+					},
+					"response": []
+				},
+				{
+					"name": "benefit-keyword-parse/BenKeyworrd/GLDX",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Success response\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "https://svck-qa.wellfirstbenefits.com/member/mtv-benefit/benefit-keyword-parse/BenKeyword/STIX"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Pricing",
+			"item": [
+				{
+					"name": "EAPG",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "https://svck-qa.wellfirstbenefits.com/medical-claims/eapg/ms-gpcs-eapg/version"
+					},
+					"response": []
+				},
+				{
+					"name": "APR",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "https://svck-qa.wellfirstbenefits.com/medical-claims/apr/rest-gpcs-apr/version"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
